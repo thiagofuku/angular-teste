@@ -4,7 +4,7 @@ services:
 
   front:
     container_name: front
-    image: thiagofuku/angular_image:angular_image
+    image: thiagofuku/angular_image:lastest
     ports:
       - 8080:80
     networks:
