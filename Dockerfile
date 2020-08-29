@@ -1,11 +1,12 @@
-FROM node:lts-alpine as node
-WORKDIR /app
-COPY package.json package-lock.json /app/
-RUN npm i npm@latest -g
-RUN npm install
-COPY . .
-RUN npm run build
 
-FROM nginx:1.13
-COPY --from=node /app/dist/angular-teste /usr/share/nginx/html
-COPY ./nginx-custom.conf /etc/nginx/conf.d/default.conf
+# Stage 1
+FROM node:10-alpine as build-step
+RUN mkdir -p /app
+WORKDIR /app
+COPY package.json /app
+RUN npm install
+COPY . /app
+RUN npm run build --prod
+# Stage 2
+FROM nginx:1.17.1-alpine
+COPY --from=build-step /app/docs /usr/share/nginx/html
