@@ -1,0 +1,15 @@
+version: '3'
+
+services:
+
+  front:
+    container_name: front
+    image: thiagofuku/front:1.0
+    ports:
+      - 8080:80
+    networks:
+      - thiago-network
+
+networks:
+  thiago-network:
+    driver: bridge
